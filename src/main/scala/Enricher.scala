@@ -29,18 +29,6 @@ object Enricher extends  App {
     val x = StationInfo.toCsv(stationNext)
     MyMap ++= Map(stationNext.short_name -> x)
   }
-//  while (true) {
-//    val polledRecords: ConsumerRecords[String, String] = consumer.poll(1000)
-//    polledRecords.forEach(consumerRecord => {
-//      val cr = consumerRecord.value().toString;
-//      val sr = MyMap.getOrElse(Trip(cr).start_station_code, ",,,,,,,,,,,,,,,,,,,,,, ")
-//      val y = cr + "," + sr
-//      println(y)
-//      val producedMessage = new ProducerRecord[String, String]("enriched", y)
-//      producer.send(producedMessage)
-//    })
-//    consumer.commitSync()
-//    Thread.sleep(4000)
-//  }
+
 }
 
