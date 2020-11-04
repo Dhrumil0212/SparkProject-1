@@ -8,7 +8,7 @@ import scala.io.Source
 
 object Enricher extends  App {
   val property: Properties = new Properties()
-  property.put("bootstrap.servers", "172.16.129.58:9092")
+  property.put("bootstrap.servers", "localhost:9092")
   property.put("group.id", "etzn")
   property.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
   property.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
