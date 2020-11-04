@@ -1,4 +1,4 @@
-case class Station(
+case class StationInfo(
                     system_Id: String,
                     language: String,
                     url: String,
@@ -18,14 +18,14 @@ case class Station(
                     rental_method_b: String
                   )
 
-object Station {
-  def apply(csvLine: String): Station = {
+object StationInfo {
+  def apply(csvLine: String): StationInfo = {
     val s = csvLine.split(",", -1)
-    new Station(s(0), s(1), s(2), s(3), s(4), s(5), s(6), s(7), s(8), s(9), s(10),
+    new StationInfo(s(0), s(1), s(2), s(3), s(4), s(5), s(6), s(7), s(8), s(9), s(10),
       s(11), s(12), s(13), s(14), s(15), s(16))
   }
 
-  def toCsv(station: Station): String = {
+  def toCsv(station: StationInfo): String = {
     station.system_Id + "," +
       station.language + "," +
       station.url + "," +

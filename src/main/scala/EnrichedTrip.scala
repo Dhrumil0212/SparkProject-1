@@ -1,4 +1,4 @@
-case class Enrichedtrip(
+case class EnrichedTrip(
                          start_date: String,
                          start_station_code:  String,
                          end_date: String,

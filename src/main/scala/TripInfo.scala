@@ -1,4 +1,4 @@
-case class Trip(
+case class TripInfo(
                  start_date: String,
                  start_station_code:  String,
                  end_date: String,
@@ -7,13 +7,13 @@ case class Trip(
                  is_member: String
                )
 
-object Trip {
-  def apply(csvLine: String): Trip = {
+object TripInfo {
+  def apply(csvLine: String): TripInfo = {
     val t = csvLine.split(",", -1)
-    new Trip(t(0), t(1), t(2), t(3), t(4), t(5))
+    new TripInfo(t(0), t(1), t(2), t(3), t(4), t(5))
   }
 
-  def toCsv(trip: Trip): String = {
+  def toCsv(trip: TripInfo): String = {
     trip.start_date + "," +
       trip.start_station_code + "," +
       trip.end_date + "," +

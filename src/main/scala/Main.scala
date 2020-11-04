@@ -6,7 +6,7 @@ import org.apache.spark.SparkContext
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.streaming.kafka010.{ConsumerStrategies, KafkaUtils, LocationStrategies}
 
-object Curator extends App {
+object Main extends App {
 
   val kafkaParams = Map[String, String](
     ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG -> "localhost:9092",
@@ -39,14 +39,14 @@ object Curator extends App {
     import spark.implicits._
     val df = microRdd
       .map(_.split(",", -1))
-      .map(x => Enrichedtrip(x(0), x(1), x(2), x(3), x(4), x(5), x(6), x(7), x(8), x(9), x(10), x(11), x(12),
+      .map(x => EnrichedTrip(x(0), x(1), x(2), x(3), x(4), x(5), x(6), x(7), x(8), x(9), x(10), x(11), x(12),
         x(13), x(14), x(15), x(16), x(17), x(18), x(19), x(20), x(21), x(22)))
       .toDF
     df.show(3)
     df.createOrReplaceTempView("a")
-    val enrichedbixi = ssDF.join(df, ssDF.col("stationId") ===
-      df.col("stationId"), "left")
-//    enrichedbixi.coalesce(1).write.mode("append").option("header", "true").csv("hdfs://quickstart.cloudera/user/fall2019/dhrumil/sprint3/result")
+    val enrichedbixi = ssDF.join(df, ssDF.col("station_id") ===
+      df.col("station_id"), "left")
+    enrichedbixi.coalesce(1).write.mode("append").option("header", "true").csv("hdfs://quickstart.cloudera/user/fall2019/dhrumil/sprint3/result")
   })
   ssc.start()
   ssc.awaitTermination()

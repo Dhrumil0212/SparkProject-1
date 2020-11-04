@@ -25,8 +25,8 @@ object Enricher extends  App {
   val stationlist: Iterator[String] = Source.fromFile("/home/bd-user/Downloads/000000_0").getLines()
   var MyMap: Map[String, Any] = Map()
   while (stationlist.hasNext) {
-    val stationNext = Station(stationlist.next)
-    val x = Station.toCsv(stationNext)
+    val stationNext = StationInfo(stationlist.next)
+    val x = StationInfo.toCsv(stationNext)
     MyMap ++= Map(stationNext.short_name -> x)
   }
 //  while (true) {
