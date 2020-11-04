@@ -1,7 +1,7 @@
 import java.util.Properties
 
-import org.apache.kafka.clients.consumer.KafkaConsumer
-import org.apache.kafka.clients.producer.KafkaProducer
+import org.apache.kafka.clients.consumer.{ConsumerRecords, KafkaConsumer}
+import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 
 import scala.collection.JavaConverters._
 import scala.io.Source
@@ -29,6 +29,17 @@ object Enricher extends  App {
     val x = StationInfo.toCsv(stationNext)
     MyMap ++= Map(stationNext.short_name -> x)
   }
-
+    while (true) {
+      val polledRecords: ConsumerRecords[String, String] = consumer.poll(1000)
+      polledRecords.forEach(consumerRecord => {
+        val cr = consumerRecord.value().toString;
+        val sr = MyMap.getOrElse(TripInfo(cr).start_station_code, ",,,,,,,,,,,,,,,,,,,,,, ")
+        val y = cr + "," + sr
+        println(y)
+        val producedMessage = new ProducerRecord[String, String]("enriched", y)
+        producer.send(producedMessage)
+      })
+      consumer.commitSync()
+      Thread.sleep(4000)
+    }
 }
-
